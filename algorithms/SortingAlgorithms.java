@@ -2,7 +2,6 @@ package algorithms;
 
 public class  SortingAlgorithms {
 
-
   public int[] selectionSort(int[] array) {
 
     for(var i = 0; i < array.length - 1; i++){
@@ -20,19 +19,51 @@ public class  SortingAlgorithms {
     }
     return array;
   };
+
+  public int[] bubbleSort(int[] array){
+    for (var i = 0; i < array.length - 1; i++) {
+      // - i - 1 permite no volver a compararlos nuevamente haciendo que se más eficiente 
+      for (var j = 0; j < array.length - i - 1; j++) {
+        if( array[j] > array[ j + 1 ] ){
+          var aux = array[j];
+          array[j] = array[j + 1 ];
+          array[j + 1 ] = aux;
+        } 
+      }
+    }
+    return array; 
+  }
   public static void main(String[] args){
 System.out.println("funciona");
     var algorithmSelection = new SortingAlgorithms();
-    int[] value = {15, 3, 19, 8, 12, 1, 20, 5, 7, 14, 2, 18, 10, 6, 13, 9, 4, 17, 11, 16};
+    int[] value = {15, 3, 500, 19, 8, 12, 1, 20, 5, 7, 14, 2, 18, 10, 6, 13, 9, 4, 17, 11, 16, 0};
+    int[] value2 = {400, 15, 3, 19, 8, 12, 1, 20, 5, 7, 14, 2, 18, 10, 6, 13, 9, 4, 17, 11, 16, 0};
+    System.out.print("Select sort before: ");
+
     for (int num : value) {
-      System.out.print( num + " " );
+      System.out.print( + num + " " );
     }
-    var arraySorted = algorithmSelection.selectionSort(value);
+    var selectArray = algorithmSelection.selectionSort(value);
 
     System.out.println();
-
-    for (int num : arraySorted) {
+    System.out.print("Select sort despues: ");
+    for (int num : selectArray) {
     System.out.print( num + " " );
     }
+
+    // Bubble sort 
+    System.out.println();
+    System.out.println();
+    System.out.print("Bubble sort before: ");
+    for (int num : value2) {
+      System.out.print( num + " " );
+    }
+    System.out.println();
+    var bubbleArray = algorithmSelection.bubbleSort(value2);
+
+    System.out.print("Bubble sort despues: ");
+    for (int num : bubbleArray) {
+      System.out.print( num + " " );
+      }
   }
 }
