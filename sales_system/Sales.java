@@ -9,7 +9,7 @@ public class Sales {
     var order1 = new Order();
     order1.addProduct(product1);
     order1.addProduct(product2);
-    order1.showOrder();
 
+    System.out.println(order1);
   }
 }

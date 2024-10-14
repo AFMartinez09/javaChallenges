@@ -29,16 +29,28 @@ public class Order {
     return total;
   }
 
-  public void showOrder(){
-    System.out.println("Id Order: " + this.idOrder);
+  @Override
+  public String toString() {
+    var result = "Id Order: " + this.idOrder + "\n";
     var totalOrder = this.calculateTotal();
-    System.out.println( "\t Total Order: $" + totalOrder );
-    System.out.println("\tOrder Products: ");
-    
-    //Only show products were adding it 
+    result += "\t Total Order: $" + totalOrder + "\n"; 
+    result += " Order Products: " + "\n";
     for (int i = 0; i < this.countProducts; i++) {
-      // println use toString (Products.java) and show data
-      System.out.println("\t\t" + this.products[i]); 
+      result += "\t\t" + this.products[i];
     }
+    return result;
   }
+
+  // public void showOrder(){
+  //   System.out.println("Id Order: " + this.idOrder);
+  //   var totalOrder = this.calculateTotal();
+  //   System.out.println( "\t Total Order: $" + totalOrder );
+  //   System.out.println("\tOrder Products: ");
+    
+  //   //Only show products were adding it 
+  //   for (int i = 0; i < this.countProducts; i++) {
+  //     // println use toString (Products.java) and show data
+  //     System.out.println("\t\t" + this.products[i]); 
+  //   }
+  // }
 }
