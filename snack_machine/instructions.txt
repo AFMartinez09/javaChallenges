@@ -1,0 +1,25 @@
+Se crea una maquina de snacks en la cual se divide de la siguiente forma:
+
+--Snack
+- countSnacks (integer, private, static)
+- idSnack (integer private)
+- price (double)
+- Snack (name, price) (constructor)
+- getters/setters
+- toString()
+- equals() (booleans)
+- hashCode() (integer)
+
+----Snacks
+List snacks
+- addSnack()
+- ShowSnacks() (Show snacks in stock)
+- getSnacks()
+
+---SnacksMachine
+- snacksMachine()
+- showMenu()
+- executeOptions()
+- buySnack()
+- showTicket()
+- addSnack()
