@@ -1,4 +1,5 @@
 package algorithms;
+import java.util.Arrays;
 
 public class  SortingAlgorithms {
 
@@ -23,8 +24,11 @@ public class  SortingAlgorithms {
   public int[] bubbleSort(int[] array){
     for (var i = 0; i < array.length - 1; i++) {
       // - i - 1 permite no volver a compararlos nuevamente haciendo que se más eficiente 
+      // hace una resta en el inidice que va (i = 2 array.length = 5 => 5 - 2 - 1 sería lo que recorre j)
       for (var j = 0; j < array.length - i - 1; j++) {
+
         if( array[j] > array[ j + 1 ] ){
+          // proceso para hacer swap (bubble)
           var aux = array[j];
           array[j] = array[j + 1 ];
           array[j + 1 ] = aux;
@@ -32,6 +36,29 @@ public class  SortingAlgorithms {
       }
     }
     return array; 
+  }
+
+  public int[] mergeSort(int[] array) {
+    if(array.length == 1){
+      return array;
+    }
+    var arraySize = array.length - 1;
+    int middle = Math.floorDiv(arraySize, 2);
+
+    int[] left = Arrays.copyOfRange(array, 0, middle);
+    int[] right = Arrays.copyOfRange(array, middle, array.length);
+
+    mergeSort(left);
+    mergeSort(right);
+
+    int[] arrayMixed = concatArrays(left, right); 
+
+    for (int i = 0; i < right.length; i++) {
+      for (int j = 0; j < right.length; j++) {
+        if(array[i] < )
+      }
+    }
+
   }
   public static void main(String[] args){
 System.out.println("funciona");
