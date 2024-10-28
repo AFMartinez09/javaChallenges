@@ -4,25 +4,28 @@ import java.util.List;
 import java.util.Scanner;
 
 import files_machine_machine.model.Snack;
-import files_machine_machine.service.Snacks;
+import files_machine_machine.service.FilesServiceSnacks;
+import files_machine_machine.service.IServiceSnacks;
 
 public class SnacksMachine {
   public static void main(String[] args){
     snackMachine();
   }
-
   public static void snackMachine(){
     var out = false;
     var console = new Scanner(System.in);
+
+    IServiceSnacks snackService = new FilesServiceSnacks();
+
     List<Snack> products = new ArrayList<>();
     System.out.println("*** Snacks machine ***");
     // Show stock (available snacks)
-    Snacks.showSnacks();
+    snackService.showSnacks();
 
     while(!out){
       try {
         var option = showMenu(console);
-        out = executeOptions(option, console, products);
+        out = executeOptions(option, console, products, snackService);
       } catch (Exception e) {
         System.out.println("Opps. Something happened. " + e.getMessage());
       }
@@ -45,13 +48,16 @@ public class SnacksMachine {
       return Integer.parseInt(console.nextLine());
   }
 
-  private static boolean executeOptions(int option, Scanner console, List<Snack> products){
+  private static boolean executeOptions(int option, 
+                                        Scanner console, 
+                                        List<Snack> products,
+                                        IServiceSnacks snackService){
     var out = false;
     switch (option) {
       // products accedemos a los elementos de la lista (products)
-      case 1 -> buySnack(console, products);
+      case 1 -> buySnack(console, products, snackService);
       case 2 -> showTicket(products);
-      case 3 -> addSnack(console);
+      case 3 -> addSnack(console, snackService);
       case 4 -> {
         System.out.println("Have a good day!");
         out = true;
@@ -61,13 +67,13 @@ public class SnacksMachine {
     return out;
   }
 
-  private static void buySnack(Scanner console, List <Snack> products){
+  private static void buySnack(Scanner console, List <Snack> products, IServiceSnacks snackService){
     System.out.print("Please choose one option from the list (id): ");
     var idSnack = Integer.parseInt(console.nextLine());
 
     // checking snack (available)
     var snackFound = false;
-    for(var snack: Snacks.geSnacks()){
+    for(var snack: snackService.getSnacks()){
       if(idSnack == snack.getIdSnack()){
         // adding snack list snacks
         products.add(snack);
@@ -92,14 +98,14 @@ public class SnacksMachine {
     System.out.println(ticket);
   }
 
-  private static void addSnack(Scanner console){
+  private static void addSnack(Scanner console, IServiceSnacks serviceSnacks){
     System.out.print("Snack name: ");
     var name = console.nextLine();
     System.out.print("Snack price: ");
     var price = Double.parseDouble(console.nextLine());
     // sending new object having new data
-    Snacks.addSnack(new Snack(name, price));
+    serviceSnacks.addSnack(new Snack(name, price));
     System.out.println("New snack has been added succesfully.");
-    Snacks.showSnacks();
+    serviceSnacks.showSnacks();
   }
 }
