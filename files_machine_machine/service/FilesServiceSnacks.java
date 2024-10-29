@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FilesServiceSnacks implements IServiceSnacks {
   private final String FILE_NAME = "snacks.txt";
@@ -18,7 +20,7 @@ public class FilesServiceSnacks implements IServiceSnacks {
     try {
       existsFile = file.exists();
       if(existsFile){
-        // this.snacks = gettingSnacks();
+        this.snacks = gettingSnacks();
       }else{
         var out = new PrintWriter(new FileWriter(file));
         out.close();
@@ -39,6 +41,28 @@ public class FilesServiceSnacks implements IServiceSnacks {
     this.addSnack(new Snack("gummy bears", 10));
     this.addSnack(new Snack("cookies", 2));
   }
+
+  private List<Snack> gettingSnacks(){
+    var snacks = new ArrayList<Snack>();
+    try {
+      // uploading file and then reading
+      List<String> lines = Files.readAllLines(Paths.get(FILE_NAME));      
+      for(String line: lines){
+        // saving data in array example [[ 1 , soda, 20 ], [ 2, chips, 20.4 ], ...]
+        String[] lineSnack = line.split(",");
+        var idSnack = lineSnack[0];
+        var name = lineSnack[1];
+        var price = Double.parseDouble(lineSnack[2]);
+        var snack = new Snack(name, price);
+        snacks.add(snack);
+      }
+    } catch (Exception e) {
+        System.out.println("Error reading snacks file: " + e.getMessage());
+        e.printStackTrace();
+    }    
+    return snacks;
+  }
+
 
   @Override
   public void addSnack(Snack snack) {
@@ -67,12 +91,17 @@ public class FilesServiceSnacks implements IServiceSnacks {
 
   @Override
   public List<Snack> getSnacks() {
-    return null;
+    return this.snacks;
   }
 
   @Override
   public void showSnacks() {
-    
+    System.out.println("--- Snacks available ---");
+    var sancksStock = "";
+    for(var snack: this.snacks){
+      sancksStock += snack.toString() + "\n";
+    }
+    System.out.println(sancksStock);
   }
   
 }
